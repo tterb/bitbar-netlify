@@ -2,7 +2,6 @@
 const https = require('https');
 const url = require('url');
 const querystring = require('querystring');
-require('dotenv').config();
 
 /*
 Bitbar Metadata
@@ -18,9 +17,7 @@ Bitbar Metadata
 */
 
 
-
-const API_TOKEN = process.env.API_TOKEN;
-console.log(API_TOKEN)
+const API_TOKEN = 'YOUR_API_TOKEN';
 
 // All my images as base64 strings
 const imgLogo =
@@ -33,6 +30,20 @@ const imgRed =
   'iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowMTgwMTE3NDA3MjA2ODExOTEwOUU5NTJDN0NFM0NDNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRDNFQjE5RDgzQjIxMUU5QjVENEQ3QzhFQjBCRDMyRiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRDNFQjE5QzgzQjIxMUU5QjVENEQ3QzhFQjBCRDMyRiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBBODAxMTc0MDcyMDY4MTE5MTA5RjVGN0Q0RUY3RTBGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAxODAxMTc0MDcyMDY4MTE5MTA5RTk1MkM3Q0UzQ0M2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+kBEPWQAAAfNJREFUeNo0kstrU0EUxr+ZOzPJTZo0SZumasGquLAmbXSTkgqK4ELtH6DiwpUP6J9TUBeCCzVLN8WNiG4Uumnzal1ZK00bm2oCzeO+7zj3Fgc+GM75fd/hMEOklAjOjUJepD37adpz7uu+mw9qBmXNnsYrPU28+NJo2kGNBIZb8/kz55zhWsEeFM87I2T8sIcuFdjhMTTEWPUnjy9/rDf3yc35gpjzRutLznGxvFBA9t4j8NmLKgpwfu3g6N0rfKs18JUna9tarMSmqf+k5JnFshxhsnQNpN2CqxSOV8ouXUe5ug4PYqFLo4/ZLCMPLrsu4pEI7PdvQaZOg+ix0CBNA7JzEPbm4GJbsewUp1dzLkCZrggJ2e0AjJ8YXAfwPdCojpwKVewVpnMOLnWVqhRPgCSSIAoIDcYIctAHhn1ww0SEc4eZXGwYWmJRJBOg2RzoxFRoCqb5g2PIo0P4fzQYGMCiosl+U1HpsOhiKplShmnQmbMg4+mTpXt/4VEK4tjomC4OpajQPY+83CKxWtvxVfI4SCoDmpkETU+EdzKWRNv2sUVj9YClrz99tjZo9O7mwKzu1msw9/cgLRPStmActLBbb2BzaNUUcydgyf+vsbJ8W1zQ8GzGsx4mfPdSUOtT9r2lRd788Mjz1bUP4fP/E2AAx5bQ4aoF5hYAAAAASUVORK5CYII=';
 const imgYellow =
   'iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowMTgwMTE3NDA3MjA2ODExOTEwOUU5NTJDN0NFM0NDNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRDQyMzY0RTgzQjIxMUU5QjVENEQ3QzhFQjBCRDMyRiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRDQyMzY0RDgzQjIxMUU5QjVENEQ3QzhFQjBCRDMyRiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBBODAxMTc0MDcyMDY4MTE5MTA5RjVGN0Q0RUY3RTBGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAxODAxMTc0MDcyMDY4MTE5MTA5RTk1MkM3Q0UzQ0M2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+7SjG7QAAAgpJREFUeNokkU1oE0EYht+Zne0mm3SzJtmQphJiC6Vp1RaF+lNB/AcPnqSleuxRPIiU0pvXHtSD1FtPiiJ48uBJC2JF8CD1UFoEE9KsIbFJ2jTs5m9/nN0MDHy83/vM984McV0X3nqx+kje2nz/IEDNeVHojHtaz5Z22478bvrS3bWHy89NTyMcII8Xr56wDn59GE0Yk+mYBVV2/EMOTYq9GsOff6FtdmzqztP1jbxw9mRK0bfefp7JNCevzJ7H6VtPkLm4hPSZRWSylzEcqEBo5RKVauNmoyO9FtLBwtK0Vpk/l+4hcWoBtGfAOcr5m3QOEFLTUBtfYDuO9nO7YLCYWJ+b0GxEJAJ7Zx2OPAwiyn4kt2fCNUt+Lxu3UWzW51g8YGSTig2RMhC7Axg6QEUfIE4P4BrlvaRigXvHWZjTQZGBiSFgQAEZUAHWnwDLgNttAN0jBBwTssRsBlnLdYXKmBSKgIRSIMEhDqpeIG489CO5pvfENogc3WOITW3UrE9jkQgHBodAwqOAFOtPaO/DlTgqmqjVD0G4l167/+xV3tSK1bYJqqgcioGGExzU+rUSwX7bQN7Qip6XRrXjhZHrayu7ZaqX9K/odvNwaYtfvO3XJX0Tv8uCPnLj5Yrn9X46wIenzGZ94sfH5Xus9X1WotWkl6jjxMtW8MK3mdurb+TB6A6X/v4XYABO7c//Tbpc4wAAAABJRU5ErkJggg==';
+
+const SYMBOL = {
+    passed: '✔︎',
+    started: '↻',
+    failed: '✘',
+    errored: '⚠',
+}
+
+const COLOR = {
+  green: '\x1b[32m',
+  red: '\x1b[31m',
+  reset: '\x1b[0m',
+  yellow: '\x1b[33m',
+}
 
 // First fetch all my sites
 fetchNetlify('sites')
@@ -78,26 +89,34 @@ fetchNetlify('sites')
     // Ok now we have the data how we want, let's loop over it and concatenate
     // a big string for bitbar
     let log = '';
-    const addToLog = str => (log = log + str + '\n');
+    const addToLog = str => (log += str + '\n');
     let notifications = 0;
 
     sites.forEach(site => {
       const hostname = new URL(site.url).hostname;
 
       let img = imgClear;
+      let symbol = '';
+      let color = COLOR.reset;
       if (site.__latestBuild__) {
         const { done, error } = site.__latestBuild__;
         if (error) {
           notifications += 1;
           img = imgRed;
+          symbol = SYMBOL.failed;
+          color = COLOR.red;
         } else if (done) {
           img = imgGreen;
+          symbol = SYMBOL.passed;
+          color = COLOR.green;
         } else {
           notifications += 1;
           img = imgYellow;
+          symbol = SYMBOL.started;
+          color = COLOR.yellow;
         }
       }
-      addToLog(`${hostname} | href=${site.admin_url} image=${img}`);
+      addToLog(`${color}${symbol}${COLOR.reset} ${hostname} | href=${site.admin_url}`);
     });
 
     // Log it all out
